@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+.no-tailwind * {
+  all: unset;
+  font-family: Arial, sans-serif;
+  color: black;
+}

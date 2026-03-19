@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# env files (IMPORTANT 🔒)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# build files
+dist/
+build/
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+
+# cache
+.cache/

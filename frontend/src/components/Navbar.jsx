@@ -1,0 +1,97 @@
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FileText } from 'lucide-react';
+import logo from "../assets/PeakCV Logo.png"
+
+
+// Use your actual logo path here: import logo from "../assets/PeakCV Logo.png"
+
+
+const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if current path is the landing page (usually "/")
+  const isLandingPage = location.pathname === '/';
+
+  /**
+   * Requirements:
+   * 1. Landing Page: Sticky (always shows on scroll) + Persistent Background.
+   * 2. Other Pages: Absolute/Static at top + Transparent Background + Doesn't follow scroll.
+   */
+  const navbarClasses = isLandingPage
+    ? "fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm" // Landing page style
+    : "absolute top-0 left-0 right-0 z-50 bg-transparent";      // Other pages style
+
+  return (
+    <div className={isLandingPage ? "" : "relative"}>
+      <nav className={`w-full transition-all duration-300 ${navbarClasses}`}>
+        <div className="flex items-center justify-between px-8  py-1 md:px-16 max-w-7xl mx-auto">
+          {/* Logo Section */}
+          <div className="flex items-center cursor-pointer  " onClick={() => navigate("/")}>
+            {logo ? (
+              <img 
+                src={logo} 
+                alt="PeakCV Logo"
+                className="h-18 w-auto object-contain"
+              />
+            ) : (
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-[#0D4D3B] rounded-xl flex items-center justify-center text-white">
+                  <FileText size={24} />
+                </div>
+                <span className="text-xl font-bold text-[#0D4D3B] tracking-tight">PeakCV</span>
+              </div>
+            )}
+          </div>
+
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+            <button 
+              onClick={() => navigate("/resume")} 
+              className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
+            >
+              Resume Templates
+            </button>
+            <button 
+              onClick={() => navigate("/about")} 
+              className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
+            >
+              About
+            </button>
+            <button 
+              className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
+            >
+              Pricing
+            </button>
+            <button 
+              onClick={() => navigate("/login")} 
+              className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
+            >
+              Login
+            </button>
+            
+            {/* Primary CTA */}
+            <button 
+              onClick={() => navigate("/register")} 
+              className="cursor-pointer bg-[#0D4D3B] text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-[#0a3a2d] transition-all active:scale-95 shadow-md hover:shadow-lg"
+            >
+              Sign Up
+            </button>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden">
+            <button className="text-[#0D4D3B] p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  );
+};
+
+export default Navbar;
