@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Lock, Eye, EyeOff, FileText, Github } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import logo from "../assets/PeakCV Logo.png"
 
 const Login = () => {
-    const navigate=useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [toastMessage, setToastMessage] = useState(location.state?.message || "");
+
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => {
+        setToastMessage("");
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
 
   const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -45,11 +56,18 @@ const handleLogin = async (e) => {
 
   return (
     <div className="min-h-screen bg-[#E9FBF3] font-sans text-[#1A4D3E] flex flex-col">
-      
-    
+      {/* Toast Message */}
+      {toastMessage && (
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1A4D3E] text-white px-6 py-3.5 rounded-xl shadow-2xl z-50 animate-in slide-in-from-bottom-5 fade-in duration-300 border border-[#0D4D3B]">
+          <p className="font-medium text-sm flex items-center gap-2">
+            <Lock size={16} />
+            {toastMessage}
+          </p>
+        </div>
+      )}
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center px-6 py-12">
+      <main className="flex-1 flex flex-col items-center justify-center px-8 md:px-16 py-12">
         {/* Header Icon & Text */}
         <div className="flex flex-col items-center mb-8">
           <div className="w-16 h-16 bg-[#D1F7E8] rounded-full flex items-center justify-center mb-6">
@@ -152,7 +170,7 @@ const handleLogin = async (e) => {
 
             {/* Sign Up Link */}
             <p className="text-center text-sm font-medium text-[#4A6D63] pt-4">
-              Don't have an account? <a href="#" className="text-[#0D4D3B] font-bold hover:underline">Sign up for free</a>
+              Don't have an account? <button type="button" onClick={() => navigate('/register')} className="text-[#0D4D3B] font-bold hover:underline">Sign up for free</button>
             </p>
           </form>
         </div>

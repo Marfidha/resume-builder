@@ -20,7 +20,7 @@ const AboutPage = () => {
    
 
       {/* Hero Section */}
-      <section className="text-center py-20 px-4 max-w-4xl mx-auto">
+      <section className="text-center py-20 px-8 md:px-16 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold mb-6">
           About <span className="text-[#065f46]">ResumeAI</span>
         </h1>
@@ -31,7 +31,7 @@ const AboutPage = () => {
       </section>
 
       {/* Our Mission Section */}
-      <section className="bg-[#f0fdf4] py-20 px-6">
+      <section className="bg-[#f0fdf4] py-20 px-8 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-bold mb-6 text-[#064e3b]">Our Mission</h2>
@@ -74,7 +74,7 @@ const AboutPage = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
+      <section className="py-20 px-8 md:px-16 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-4 text-[#064e3b]">Why Choose ResumeAI?</h2>
           <p className="text-slate-600">We combine artificial intelligence with human expertise to deliver exceptional results.</p>
@@ -102,7 +102,7 @@ const AboutPage = () => {
 
       {/* Stats Section */}
       <section className="py-16 border-y border-slate-100 bg-emerald-50/30">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="max-w-7xl mx-auto px-8 md:px-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <div className="text-4xl font-bold text-[#064e3b] mb-2">50,000+</div>
             <div className="text-slate-500 text-sm">Resumes Created</div>
@@ -123,7 +123,7 @@ const AboutPage = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-20 px-6 max-w-4xl mx-auto text-center">
+      <section className="py-20 px-8 md:px-16 max-w-4xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-8 text-[#064e3b]">Our Story</h2>
         <div className="text-slate-600 space-y-6 leading-relaxed text-left md:text-center">
           <p>
@@ -147,7 +147,7 @@ const AboutPage = () => {
       </section>
 
       {/* Our Values Section */}
-      <section className="bg-slate-50 py-20 px-6">
+      <section className="bg-slate-50 py-20 px-8 md:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4 text-[#064e3b]">Our Values</h2>
@@ -170,7 +170,7 @@ const AboutPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 text-center bg-gradient-to-r from-[#064e3b] via-[#065f46] to-[#059669] text-white">
+      <section className="py-20 px-8 md:px-16 text-center bg-gradient-to-r from-[#064e3b] via-[#065f46] to-[#059669] text-white">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-6">Ready to Build Your Future?</h2>
           <p className="mb-10 text-emerald-50">Join thousands of professionals who've successfully transformed their careers with ResumeAI.</p>

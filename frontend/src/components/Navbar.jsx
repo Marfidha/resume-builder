@@ -25,8 +25,8 @@ const Navbar = () => {
 
   return (
     <div className={isLandingPage ? "" : "relative"}>
-      <nav className={`w-full transition-all duration-300 ${navbarClasses}`}>
-        <div className="flex items-center justify-between px-8  py-1 md:px-16 max-w-7xl mx-auto">
+      <nav className={`w-full transition-all duration-300 px-8 md:px-16 ${navbarClasses}`}>
+        <div className="flex items-center justify-between py-1 max-w-7xl mx-auto w-full">
           {/* Logo Section */}
           <div className="flex items-center cursor-pointer  " onClick={() => navigate("/")}>
             {logo ? (
@@ -47,23 +47,14 @@ const Navbar = () => {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-            <button 
-              onClick={() => navigate("/resume")} 
-              className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
-            >
-              Resume Templates
-            </button>
+
             <button 
               onClick={() => navigate("/about")} 
               className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
             >
               About
             </button>
-            <button 
-              className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
-            >
-              Pricing
-            </button>
+
             <button 
               onClick={() => navigate("/login")} 
               className="cursor-pointer hover:text-[#0D4D3B] transition-colors"

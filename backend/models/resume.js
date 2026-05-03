@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 
 const resumeSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      unique: true
+    },
     personalInfo: {
       fullName: String,
       email: String,
@@ -69,6 +75,13 @@ const resumeSchema = new mongoose.Schema(
           description: String
         }
       ]
+    },
+    aiAnalysis: {
+      atsScore: String,
+      strengths: [String],
+      weaknesses: [String],
+      missingSkills: [String],
+      improvedSummary: String
     }
   },
   { timestamps: true }

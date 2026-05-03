@@ -18,12 +18,12 @@ const ResumeType = () => {
      
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 md:px-16 py-12 flex flex-col items-center">
+      <main className="max-w-7xl mx-auto px-8 md:px-16 py-12 flex flex-col items-center">
         {/* Breadcrumb */}
         <div className="w-full max-w-5xl pt-16">
-          <button className="flex items-center gap-1 text-gray-500 text-sm font-medium hover:text-[#0D4D3B] transition-colors">
+          <button onClick={() => navigate('/')} className="flex items-center gap-1 text-gray-500 text-sm font-medium hover:text-[#0D4D3B] transition-colors">
             <ChevronLeft size={16} />
-            Back to Templates
+            Back to Home
           </button>
         </div>
 

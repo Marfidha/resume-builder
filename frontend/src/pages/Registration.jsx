@@ -53,7 +53,7 @@ const Registration = () => {
       {/* Navigation */}
     
 
-      <main className="max-w-7xl mx-auto px-6 md:px-16 py-12 md:py-20 flex flex-col lg:flex-row items-start justify-between gap-12">
+      <main className="max-w-7xl mx-auto px-8 md:px-16 py-12 md:py-20 flex flex-col lg:flex-row items-start justify-between gap-12">
         {/* Left Content */}
         <div className="flex-1 max-w-xl">
           <div className="w-12 h-12 bg-white/50 rounded-full flex items-center justify-center mb-8">
@@ -182,7 +182,7 @@ const Registration = () => {
               </div>
 
               <p className="text-center text-sm text-[#4A6D63] pt-4">
-                Already have an account? <a href="#" className="text-[#0D4D3B] font-bold hover:underline">Sign in</a>
+                Already have an account? <button type="button" onClick={() => navigate('/login')} className="text-[#0D4D3B] font-bold hover:underline">Sign in</button>
               </p>
             </form>
           </div>
