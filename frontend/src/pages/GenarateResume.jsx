@@ -25,6 +25,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import ResumePDF from './ResumePDF';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toPng, toJpeg } from 'html-to-image';
+import API_BASE_URL from "../config/api";
 
 const GenarateResume = () => {
   const [activeMode, setActiveMode] = useState('resume'); // 'resume' | 'analysis'
@@ -82,7 +83,7 @@ const GenarateResume = () => {
 
     const fetchResume = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/resumes/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/api/resumes/${id}`);
         setResume(res.data);
       } catch (err) {
         console.error("Error fetching resume:", err);

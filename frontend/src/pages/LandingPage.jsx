@@ -14,8 +14,8 @@ import {
   Download,
   Lock
 } from 'lucide-react';
-
 import { useUser } from "@clerk/react";
+import API_BASE_URL from "../config/api";
 
 const LandingPage = () => {
   const fileInputRef = useRef(null);
@@ -30,7 +30,7 @@ const LandingPage = () => {
       
       if (isSignedIn) {
         try {
-          const res = await axios.get('http://localhost:5000/api/resumes/me');
+          const res = await axios.get(`${API_BASE_URL}/api/resumes/me`);
           if (res.data && res.data._id) {
             setHasResume(true);
             setResumeId(res.data._id);
@@ -70,7 +70,7 @@ const LandingPage = () => {
       formData.append('resume', file);
 
       try {
-        const response = await axios.post('http://localhost:5000/api/upload', formData);
+        const response = await axios.post(`${API_BASE_URL}/api/upload`, formData);
         if (response.data.id) {
           navigate(`/resume/${response.data.id}`);
         } else {

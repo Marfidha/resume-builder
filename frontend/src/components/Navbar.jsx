@@ -4,6 +4,7 @@ import { FileText } from 'lucide-react';
 import logo from "../assets/PeakCV Logo.png"
 import axios from 'axios';
 import { SignInButton ,useUser ,useClerk,UserButton,useAuth} from "@clerk/react";
+import API_BASE_URL from "../config/api";
 
 
 
@@ -32,7 +33,7 @@ const Navbar = () => {
 const syncUser = async () => {
   const token = await getToken();
   try {
-    await axios.post("http://localhost:5000/api/users/sync", {
+    await axios.post(`${API_BASE_URL}/api/users/sync`, {
       clerkId: user.id,
       name: user.fullName,
       email: user.primaryEmailAddress?.emailAddress,
