@@ -62,6 +62,7 @@ const LandingPage = () => {
   };
 
   const handleFileChange = async (e) => {
+    const token = await getToken();
     const file = e.target.files[0];
     if (file) {
       console.log("Selected file:", file.name);
@@ -70,7 +71,11 @@ const LandingPage = () => {
       formData.append('resume', file);
 
       try {
-        const response = await axios.post(`${API_BASE_URL}/api/upload/`, formData);
+        const response = await axios.post(`${API_BASE_URL}/api/upload/`, formData,{
+      headers: {
+         Authorization: `Bearer ${token}`,
+      },
+   });
         if (response.data.id) {
           navigate(`/resume/${response.data.id}`);
         } else {
