@@ -70,7 +70,7 @@ const LandingPage = () => {
       formData.append('resume', file);
 
       try {
-        const response = await axios.post(`${API_BASE_URL}/api/upload`, formData);
+        const response = await axios.post(`${API_BASE_URL}/api/upload/`, formData);
         if (response.data.id) {
           navigate(`/resume/${response.data.id}`);
         } else {
