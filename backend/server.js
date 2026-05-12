@@ -8,7 +8,6 @@ import uploadRoutes from "./Routes/uploadRoutes.js"
 import { clerkMiddleware } from "@clerk/express";
 
 const app = express();
-app.use(express.json());
 connectDB()
 const port = process.env.PORT || 5000;
 
@@ -27,6 +26,9 @@ app.use(cors({
   },
   credentials: true
 }));
+
+app.use(clerkMiddleware());
+app.use(express.json());
 
 app.use("/api/users", authRoutes);
 app.use('/api/resumes', resumeRoutes);
