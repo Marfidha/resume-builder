@@ -32,56 +32,110 @@ export const uploadResume = async (req, res) => {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
 
-      contents: `
-      Analyze this resume text and extract the information into a JSON format.
-      It must exactly match this structure (use null or empty arrays if data is missing):
-      {
-        "personalInfo": {
-          "fullName": "...",
-          "email": "...",
-          "phone": "...",
-          "location": "...",
-          "linkedin": "...",
-          "website": "..."
-        },
-        "summary": { "text": "..." },
-        "education": {
-          "degree": "...",
-          "institution": "...",
-          "location": "...",
-          "graduationDate": "...",
-          "gpa": "..."
-        },
-        "experience": {
-          "entries": [
-            { "jobTitle": "...", "company": "...", "location": "...", "startDate": "...", "endDate": "...", "description": "..." }
-          ]
-        },
-        "skills": {
-          "skillsList": ["...", "..."]
-        },
-        "certifications": {
-          "entries": [
-            { "title": "...", "issuer": "...", "date": "...", "description": "..." }
-          ]
-        },
-        "achievements": {
-          "entries": [
-            { "title": "...", "issuer": "...", "date": "...", "description": "..." }
-          ]
-        },
-        "aiAnalysis": {
-          "atsScore": "...",
-          "strengths": ["...", "..."],
-          "weaknesses": ["...", "..."],
-          "missingSkills": ["...", "..."],
-          "improvedSummary": "..."
-        }
-      }
+     contents: `
+Analyze the following resume text and extract the data into a clean, professional JSON format.
 
-      Return ONLY valid JSON without markdown formatting like \`\`\`json.
-      Resume text: ${cleanedText}
-      `
+IMPORTANT RULES:
+1. Return ONLY valid JSON.
+2. Do NOT use markdown or \`\`\`json.
+3. Use null or empty arrays if data is missing.
+4. Do NOT repeat the same information in multiple sections.
+5. Merge duplicate work experience entries if same company / same role / overlapping dates.
+6. Keep descriptions concise and professional.
+7. Skills must contain only unique skills (no duplicates).
+8. Projects must NOT go inside achievements.
+9. Achievements = awards, certifications, ranks, recognitions only.
+10. Projects = applications, websites, systems, products built by candidate.
+11. Rewrite summary professionally in 40-60 words with no repeated technologies.
+12. Preserve factual information from resume. Do not invent fake experience.
+
+Return exactly this JSON structure:
+
+{
+  "personalInfo": {
+    "fullName": "...",
+    "email": "...",
+    "phone": "...",
+    "location": "...",
+    "linkedin": "...",
+    "website": "..."
+  },
+
+  "summary": {
+    "text": "..."
+  },
+
+  "education": {
+    "degree": "...",
+    "institution": "...",
+    "location": "...",
+    "graduationDate": "...",
+    "gpa": "..."
+  },
+
+  "experience": {
+    "entries": [
+      {
+        "jobTitle": "...",
+        "company": "...",
+        "location": "...",
+        "startDate": "...",
+        "endDate": "...",
+        "description": "..."
+      }
+    ]
+  },
+
+  "skills": {
+    "skillsList": ["...", "..."]
+  },
+
+  "projects": {
+    "entries": [
+      {
+        "title": "...",
+        "techStack": "...",
+        "startDate": "...",
+        "endDate": "...",
+        "description": "..."
+      }
+    ]
+  },
+
+  "certifications": {
+    "entries": [
+      {
+        "title": "...",
+        "issuer": "...",
+        "date": "...",
+        "description": "..."
+      }
+    ]
+  },
+
+  "achievements": {
+    "entries": [
+      {
+        "title": "...",
+        "issuer": "...",
+        "date": "...",
+        "description": "..."
+      }
+    ]
+  },
+
+  "aiAnalysis": {
+    "atsScore": "...",
+    "strengths": ["...", "..."],
+    "weaknesses": ["...", "..."],
+    "missingSkills": ["...", "..."],
+    "improvedSummary": "..."
+  }
+}
+
+Resume text:
+${cleanedText}
+`
     });
 
     const aiText = response.text;

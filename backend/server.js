@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./Routes/authRoutes.js"
 import resumeRoutes from "./Routes/resumRoutes.js"
 import uploadRoutes from "./Routes/uploadRoutes.js"
+import { clerkMiddleware } from "@clerk/express";
 
 const app = express();
 app.use(express.json());
@@ -18,9 +19,10 @@ app.use(
   })
 );
 
-app.use("/api/auth", authRoutes);
+app.use("/api/users", authRoutes);
 app.use('/api/resumes', resumeRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use(clerkMiddleware());
 
 app.listen(port, () => {
   console.log(`Server running on port${port}`);

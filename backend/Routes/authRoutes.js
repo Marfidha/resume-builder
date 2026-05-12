@@ -1,10 +1,11 @@
 import express from "express"
-import { loginUser, registerUser } from "../controllers/authcontroller.js";
+import { registerUser, syncUser } from "../controllers/authcontroller.js";
+import {  clerkMiddleware } from "@clerk/express";
 
 
 const router = express.Router();
 
 router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/sync", clerkMiddleware(), syncUser);
 
 export default router;

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FileText } from 'lucide-react';
 import logo from "../assets/PeakCV Logo.png"
+import axios from 'axios';
+import { SignInButton ,useUser ,useClerk,UserButton,useAuth} from "@clerk/react";
+
 
 
 // Use your actual logo path here: import logo from "../assets/PeakCV Logo.png"
@@ -10,18 +13,41 @@ import logo from "../assets/PeakCV Logo.png"
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { getToken } = useAuth();
 
-  // Check if current path is the landing page (usually "/")
   const isLandingPage = location.pathname === '/';
-
-  /**
-   * Requirements:
-   * 1. Landing Page: Sticky (always shows on scroll) + Persistent Background.
-   * 2. Other Pages: Absolute/Static at top + Transparent Background + Doesn't follow scroll.
-   */
+  const { user, isSignedIn, isLoaded } = useUser();
+    const { openSignIn } = useClerk();
   const navbarClasses = isLandingPage
     ? "fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm" // Landing page style
     : "absolute top-0 left-0 right-0 z-50 bg-transparent";      // Other pages style
+  
+
+    useEffect(() => {
+  if (isLoaded && isSignedIn && user) {
+    syncUser();
+  }
+}, [isLoaded, isSignedIn]);
+
+const syncUser = async () => {
+  const token = await getToken();
+  try {
+    await axios.post("http://localhost:5000/api/users/sync", {
+      clerkId: user.id,
+      name: user.fullName,
+      email: user.primaryEmailAddress?.emailAddress,
+      image: user.imageUrl
+    },
+   {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  );
+  } catch (err) {
+    console.error("User sync failed", err);
+  }
+};
 
   return (
     <div className={isLandingPage ? "" : "relative"}>
@@ -55,20 +81,26 @@ const Navbar = () => {
               About
             </button>
 
-            <button 
+            {/* <button 
               onClick={() => navigate("/login")} 
               className="cursor-pointer hover:text-[#0D4D3B] transition-colors"
             >
               Login
-            </button>
+            </button> */}
             
-            {/* Primary CTA */}
+             {
+          !isSignedIn ? (
             <button 
-              onClick={() => navigate("/register")} 
+              onClick={openSignIn}
               className="cursor-pointer bg-[#0D4D3B] text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-[#0a3a2d] transition-all active:scale-95 shadow-md hover:shadow-lg"
             >
-              Sign Up
+              {/* Sign Up */}
+              Login
             </button>
+          ):(
+            <UserButton afterSignOutUrl="/" />
+          )
+        }
           </div>
 
           {/* Mobile Menu Toggle */}

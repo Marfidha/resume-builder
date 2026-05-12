@@ -346,6 +346,37 @@ const GenarateResume = () => {
                           </ul>
                         </section>
                       )}
+                      {resume.projects?.entries?.length > 0 && (
+  <section className="mb-8">
+    <h2 className="text-sm font-black uppercase tracking-widest mb-4">
+      Projects
+    </h2>
+
+    {resume.projects.entries.map((project, i) => (
+      <div key={i} className="mb-6">
+        <div className="flex justify-between items-baseline mb-1">
+          <h3 className="font-bold text-[15px]">
+            {project.title}
+          </h3>
+
+          <span className="text-xs text-slate-500 font-semibold">
+            {project.startDate} - {project.endDate}
+          </span>
+        </div>
+
+        {project.techStack && (
+          <div className="text-sm text-slate-600 font-medium mb-2">
+            Tech Stack: {project.techStack}
+          </div>
+        )}
+
+        <p className="text-sm text-slate-700 whitespace-pre-line">
+          {project.description}
+        </p>
+      </div>
+    ))}
+  </section>
+)}
                     </div>
                   </div>
                 </motion.div>

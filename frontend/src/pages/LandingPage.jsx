@@ -15,6 +15,7 @@ import {
   Lock
 } from 'lucide-react';
 
+import { useUser } from "@clerk/react";
 
 const LandingPage = () => {
   const fileInputRef = useRef(null);
@@ -22,11 +23,12 @@ const LandingPage = () => {
   const [toastMessage, setToastMessage] = useState("");
   const [hasResume, setHasResume] = useState(false);
   const [resumeId, setResumeId] = useState(null);
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     const checkUserResume = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
+      
+      if (isSignedIn) {
         try {
           const res = await axios.get('http://localhost:5000/api/resumes/me');
           if (res.data && res.data._id) {
@@ -51,12 +53,12 @@ const LandingPage = () => {
   }, [toastMessage]);
 
   const handleAuthCheck = () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setToastMessage("Please login to continue");
-      return false;
-    }
-    return true;
+    
+  if (!isSignedIn) {
+    setToastMessage("Please login to continue");
+    return false;
+  }
+  return true;
   };
 
   const handleFileChange = async (e) => {
