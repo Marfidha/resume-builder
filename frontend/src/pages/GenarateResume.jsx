@@ -25,7 +25,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import ResumePDF from './ResumePDF';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toPng, toJpeg } from 'html-to-image';
-import API_BASE_URL from "../config/api";
+import API_BASE_URL from "../config/api.js";
 
 const GenarateResume = () => {
   const [activeMode, setActiveMode] = useState('resume'); // 'resume' | 'analysis'

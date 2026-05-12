@@ -15,7 +15,7 @@ import {
   Lock
 } from 'lucide-react';
 import { useUser } from "@clerk/react";
-import API_BASE_URL from "../config/api";
+import API_BASE_URL from "../config/api.js";
 
 const LandingPage = () => {
   const fileInputRef = useRef(null);
