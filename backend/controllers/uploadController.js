@@ -1,6 +1,7 @@
 import { createRequire } from 'module';
 import ai from "../config/gemini.js";
 import Resume from "../models/resume.js";
+import { getAuth } from '@clerk/express';
 
 const require = createRequire(import.meta.url);
 const pdfParse = require('pdf-parse');
@@ -152,11 +153,17 @@ ${cleanedText}
     }
 
     // Save to MongoDB using upsert
-    const savedResume = await Resume.findOneAndUpdate(
-      { userId: req.user.id },
-      { ...parsedData, userId: req.user.id },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+  const { userId } = getAuth(req);
+
+const savedResume = await Resume.findOneAndUpdate(
+   { userId },
+   { ...parsedData, userId },
+   {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true,
+   }
+);
 
     res.status(200).json({
       message: "PDF processed and saved successfully",
