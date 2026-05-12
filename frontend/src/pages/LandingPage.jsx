@@ -14,7 +14,7 @@ import {
   Download,
   Lock
 } from 'lucide-react';
-import { useUser } from "@clerk/react";
+import { useUser, useAuth } from "@clerk/react";
 import API_BASE_URL from "../config/api.js";
 
 const LandingPage = () => {
@@ -24,6 +24,7 @@ const LandingPage = () => {
   const [hasResume, setHasResume] = useState(false);
   const [resumeId, setResumeId] = useState(null);
   const { isSignedIn } = useUser();
+  const { getToken } = useAuth();
 
   useEffect(() => {
     const checkUserResume = async () => {

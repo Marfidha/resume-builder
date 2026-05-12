@@ -4,7 +4,7 @@ import { FileText } from 'lucide-react';
 import logo from "../assets/PeakCV Logo.png"
 import axios from 'axios';
 import { SignInButton ,useUser ,useClerk,UserButton,useAuth} from "@clerk/react";
-import API_BASE_URL from "../config/api";
+import API_BASE_URL from "../config/api.js";
 
 
 
