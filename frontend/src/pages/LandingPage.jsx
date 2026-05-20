@@ -1,19 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {
-  FileText,
-  Check,
-  Sparkles,
-  Zap,
-  ShieldCheck,
-  Star,
-  ArrowRight,
-  Layout,
-  Upload,
-  Download,
-  Lock
-} from 'lucide-react';
+import { FileText, Check, Sparkles, Zap, ShieldCheck, Star, ArrowRight, Layout, Upload, Download, Lock} from 'lucide-react';
 import { useUser, useAuth } from "@clerk/react";
 import API_BASE_URL from "../config/api.js";
 

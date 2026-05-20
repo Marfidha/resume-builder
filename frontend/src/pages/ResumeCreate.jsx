@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "@clerk/react";
 import API_BASE_URL from "../config/api.js";
 
 
@@ -30,6 +31,8 @@ const ResumeCreate = () => {
   const [loading, setLoading] = useState(false);
   const [resumeId, setResumeId] = useState(null);
   const [error, setError] = useState('');
+
+  const { getToken } = useAuth();
 
   const [formData, setFormData] = useState({
     personalInfo: {
@@ -288,7 +291,9 @@ const ResumeCreate = () => {
         }
       };
 
-      const response = await axios.post(`${API_URL}/resumes`, resumeData);
+      const token = await getToken();
+
+      const response = await axios.post(`${API_URL}/resumes`, resumeData, { headers: { Authorization: `Bearer ${token}`,},});
       setResumeId(response.data._id);
       return response.data._id;
     } catch (err) {

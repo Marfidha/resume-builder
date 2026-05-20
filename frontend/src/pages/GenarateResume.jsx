@@ -113,7 +113,7 @@ const GenarateResume = () => {
         <div className="flex flex-col lg:flex-row gap-8 items-start">
 
           {/* Sidebar */}
-          <aside className="w-full lg:w-72 flex-shrink-0 bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden lg:sticky lg:top-28 z-30">
+          <aside className="w-full lg:w-72 shrink-0 bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden lg:sticky lg:top-28 z-30">
             <div className="p-6 bg-slate-50 border-b border-slate-100">
               <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
                 {/* <FileText className="w-5 h-5 text-indigo-600" /> */}
