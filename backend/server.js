@@ -13,7 +13,6 @@ const port = process.env.PORT || 5000;
 
 app.use(clerkMiddleware());
 app.use(express.json());
-
 app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true
@@ -22,7 +21,9 @@ app.use(cors({
 app.use("/api/users", authRoutes);
 app.use('/api/resumes', resumeRoutes);
 app.use('/api/upload', uploadRoutes);
-
+app.get("/", (req, res) => {
+  res.json("backend is running");
+});
 app.listen(port, () => {
   console.log(`Server running on port${port}`);
 });
