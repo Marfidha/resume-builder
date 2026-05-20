@@ -2,7 +2,6 @@ import { createRequire } from 'module';
 import ai from "../config/gemini.js";
 import Resume from "../models/resume.js";
 import { getAuth } from '@clerk/express';
-
 const require = createRequire(import.meta.url);
 const pdfParse = require('pdf-parse');
 
