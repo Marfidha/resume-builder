@@ -11,12 +11,14 @@ const app = express();
 connectDB()
 const port = process.env.PORT || 5000;
 
-app.use(clerkMiddleware());
-app.use(express.json());
 app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true
 }));
+app.use(clerkMiddleware());
+app.use(express.json());
+console.log(process.env.CLIENT_URL);
+
 
 app.use("/api/users", authRoutes);
 app.use('/api/resumes', resumeRoutes);

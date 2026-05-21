@@ -292,8 +292,10 @@ const ResumeCreate = () => {
       };
 
       const token = await getToken();
-
+      console.log(token);
+      
       const response = await axios.post(`${API_URL}/resumes`, resumeData, { headers: { Authorization: `Bearer ${token}`,},});
+      console.log(response.data);
       setResumeId(response.data._id);
       return response.data._id;
     } catch (err) {
@@ -312,12 +314,9 @@ const ResumeCreate = () => {
     setError('');
     try {
       const id = await saveResumeToDB();
-
+      console.log(id);
       if (!id) return;
-
-      // 🔥 NAVIGATE TO NEW PAGE
       navigate(`/resume/${id}`);
-
     } catch (err) {
       console.error('Failed to generate resume:', err);
     }

@@ -1,11 +1,9 @@
 import express from "express"
-import { registerUser, syncUser } from "../controllers/authcontroller.js";
+import {syncUser } from "../controllers/authcontroller.js";
 import {   requireAuth } from "@clerk/express";
-
 
 const router = express.Router();
 
-router.post("/register", registerUser);
-router.post("/sync", requireAuth, syncUser);
+router.post("/sync", syncUser);
 
 export default router;

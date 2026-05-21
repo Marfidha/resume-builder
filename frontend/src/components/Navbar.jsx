@@ -7,49 +7,58 @@ import { SignInButton ,useUser ,useClerk,UserButton,useAuth} from "@clerk/react"
 import API_BASE_URL from "../config/api.js";
 
 
-
-// Use your actual logo path here: import logo from "../assets/PeakCV Logo.png"
-
-
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { getToken } = useAuth();
+  const { openSignIn } = useClerk();
 
   const isLandingPage = location.pathname === '/';
   const { user, isSignedIn, isLoaded } = useUser();
-    const { openSignIn } = useClerk();
   const navbarClasses = isLandingPage
     ? "fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm" // Landing page style
     : "absolute top-0 left-0 right-0 z-50 bg-transparent";      // Other pages style
   
 
-    useEffect(() => {
-  if (isLoaded && isSignedIn && user) {
-    syncUser();
-  }
-}, [isLoaded, isSignedIn]);
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user) {
+      syncUser();
+    }
+  }, [isLoaded, isSignedIn,user]);
 
 const syncUser = async () => {
-  const token = await getToken();
+
   try {
-    await axios.post(`${API_BASE_URL}/api/users/sync`, {
-      clerkId: user.id,
-      name: user.fullName,
-      email: user.primaryEmailAddress?.emailAddress,
-      image: user.imageUrl
-    },
-   {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  );
+
+    const token = await getToken({
+      template: "default"
+    });
+
+    console.log(token);
+
+    const response = await axios.post(
+      `${API_BASE_URL}/api/users/sync`,
+      {
+        name: user.fullName,
+        email: user.primaryEmailAddress?.emailAddress,
+        image: user.imageUrl
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    console.log(response.data);
+
   } catch (err) {
+
+    console.log(err.response?.data);
+
     console.error("User sync failed", err);
   }
 };
-
   return (
     <div className={isLandingPage ? "" : "relative"}>
       <nav className={`w-full transition-all duration-300 px-8 md:px-16 ${navbarClasses}`}>

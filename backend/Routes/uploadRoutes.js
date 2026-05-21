@@ -9,6 +9,6 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('/',requireAuth, upload.single('resume'), uploadResume);
+router.post('/', upload.single('resume'), uploadResume);
 
 export default router;

@@ -8,6 +8,13 @@ const pdfParse = require('pdf-parse');
 
 
 export const uploadResume = async (req, res) => {
+  const { userId } = getAuth(req);
+
+    if (!userId) {
+      return res.status(401).json({
+        message: "Unauthorized"
+      });
+    }
   try {
 
     if (!req.file) {
