@@ -9,28 +9,46 @@ const LandingPage = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState("");
-  const [hasResume, setHasResume] = useState(false);
   const [resumeId, setResumeId] = useState(null);
   const { isSignedIn } = useUser();
   const { getToken } = useAuth();
+  const hasResume = Boolean(resumeId);
+  // console.log(hasResume);
+  // console.log(resumeId);
+  
+  
 
-  useEffect(() => {
-    const checkUserResume = async () => {
-      
-      if (isSignedIn) {
-        try {
-          const res = await axios.get(`${API_BASE_URL}/api/resumes/me`);
-          if (res.data && res.data._id) {
-            setHasResume(true);
-            setResumeId(res.data._id);
-          }
-        } catch (error) {
-          console.log("No existing resume found or error fetching:", error.message);
+ useEffect(() => {
+  const checkUserResume = async () => {
+
+    if (!isSignedIn) return;
+
+    try {
+
+      const token = await getToken();
+
+      const res = await axios.get(
+        `${API_BASE_URL}/api/resumes/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
+      );
+
+      console.log(res.data);
+
+      if (res.data && res.data._id) {
+        setResumeId(res.data._id);
       }
-    };
-    checkUserResume();
-  }, []);
+
+    } catch (error) {
+      console.log("Error fetching resume:", error);
+    }
+  };
+
+  checkUserResume();
+}, [isSignedIn]);
 
   useEffect(() => {
     if (toastMessage) {
