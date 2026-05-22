@@ -7,6 +7,7 @@ import axios from 'axios';
 import {  useAuth } from "@clerk/react";
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from "../config/api.js";
+import Loader from '../components/Loader.jsx';
 
 const ResumeEditpage = () => {
   const navigate = useNavigate();
@@ -164,7 +165,7 @@ const ResumeEditpage = () => {
     setSaving(true);
     try {
       const token = await getToken();
-      await axios.post(
+    const response=  await axios.post(
         `${API_URL}/resumes`,
         formData,
         {
@@ -173,7 +174,9 @@ const ResumeEditpage = () => {
           },
         }
       );
-      alert('Resume saved successfully!');
+
+      navigate(`/resume/${response.data._id}`);
+
     } catch (err) {
       setError('Failed to save resume');
     } finally {
@@ -197,9 +200,7 @@ const ResumeEditpage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
-        <Loader2 className="animate-spin text-emerald-600" size={48} />
-      </div>
+      <Loader text='Loading Resume...'/>
     );
   }
 
@@ -216,7 +217,14 @@ const ResumeEditpage = () => {
           <div className="flex items-center gap-3">
             {error && <span className="text-red-500 text-sm font-medium mr-2">{error}</span>}
             <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-6 py-2.5 bg-[#10b981] text-white rounded-lg hover:bg-[#059669] text-sm font-bold transition-colors shadow-sm disabled:opacity-50">
-              {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+              {saving ? (
+                 <>
+                   <Loader2 size={16} className="animate-spin" /> Saving...
+                 </>
+                ) : (
+                 <>
+                  <Save size={16} /> Save & Continue</>
+                )}
               Save & Continue
             </button>
           </div>

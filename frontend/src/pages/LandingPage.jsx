@@ -10,6 +10,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState("");
   const [resumeId, setResumeId] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
   const { isSignedIn } = useUser();
   const { getToken } = useAuth();
   const hasResume = Boolean(resumeId);
@@ -76,7 +77,7 @@ const LandingPage = () => {
 
       const formData = new FormData();
       formData.append('resume', file);
-
+        setIsUploading(true);
       try {
         const response = await axios.post(`${API_BASE_URL}/api/upload/`, formData,{
       headers: {
@@ -91,6 +92,8 @@ const LandingPage = () => {
       } catch (error) {
         console.error("Error uploading file:", error);
         alert("Error uploading PDF");
+      } finally {
+        setIsUploading(false);
       }
 
       // Clear the input value so the same file can be selected again
@@ -137,9 +140,26 @@ const LandingPage = () => {
                     accept=".pdf"
                     onChange={handleFileChange}
                   />
-                  <button onClick={() => { if (handleAuthCheck()) fileInputRef.current?.click() }} className="bg-white text-[#0D4D3B] border border-gray-200 px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-2 hover:bg-gray-50 transition-all active:scale-95">
-                    <Upload size={20} />
-                    Import Resume
+                  <button
+                    disabled={isUploading}
+                    onClick={() => {
+                      if (handleAuthCheck()) fileInputRef.current?.click()
+                    }}
+                    className={`bg-white text-[#0D4D3B] border border-gray-200 px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-2 transition-all active:scale-95
+                    ${isUploading ? "opacity-70 cursor-not-allowed" : "hover:bg-gray-50"}
+                    `}
+                  >
+                    {isUploading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-[#0D4D3B] border-t-transparent rounded-full animate-spin"></div>
+                        Uploading...
+                      </>
+                    ) : (
+                      <>
+                        <Upload size={20} />
+                        Import Resume
+                      </>
+                    )}
                   </button>
                 </>
               ) : (
@@ -159,10 +179,25 @@ const LandingPage = () => {
                     accept=".pdf"
                     onChange={handleFileChange}
                   />
-                  <button onClick={() => fileInputRef.current?.click()} className="bg-white text-[#0D4D3B] border border-gray-200 px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-2 hover:bg-gray-50 transition-all active:scale-95">
+                <button
+                disabled={isUploading}
+                onClick={() => fileInputRef.current?.click()}
+                className={`bg-white text-[#0D4D3B] border border-gray-200 px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-2 transition-all active:scale-95
+                ${isUploading ? "opacity-70 cursor-not-allowed" : "hover:bg-gray-50"}
+                `}
+              >
+                {isUploading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-[#0D4D3B] border-t-transparent rounded-full animate-spin"></div>
+                    Re-importing...
+                  </>
+                ) : (
+                  <>
                     <Upload size={20} />
                     Re-import Resume
-                  </button>
+                  </>
+                )}
+              </button>
                 </>
               )}
             </div>

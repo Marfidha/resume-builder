@@ -26,6 +26,7 @@ import ResumePDF from './ResumePDF';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toPng, toJpeg } from 'html-to-image';
 import API_BASE_URL from "../config/api.js";
+import Loader from '../components/Loader.jsx';
 
 const GenarateResume = () => {
   const [activeMode, setActiveMode] = useState('resume'); // 'resume' | 'analysis'
@@ -97,12 +98,11 @@ const GenarateResume = () => {
     navigate(`/edit/${id}`);
   };
 
-  if (!resume) return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-      <p className="mt-4 text-slate-600 font-medium">Loading your professional profile...</p>
-    </div>
+ if (!resume) {
+  return (
+    <Loader text="Loading your professional profile..." />
   );
+}
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] font-sans text-slate-800 pt-24 pb-12 relative">

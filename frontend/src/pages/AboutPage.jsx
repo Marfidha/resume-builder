@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Zap, 
   ShieldCheck, 
@@ -7,13 +7,27 @@ import {
   Lightbulb, 
   CheckCircle,
   Eye,
-  Users
+  Users,
 } from 'lucide-react';
 import logo from "../assets/PeakCV Logo.png"
 import { useNavigate } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 const AboutPage = () => {
     const navigate=useNavigate()
+      const [loading, setLoading] = useState(true);
+
+      useEffect(() => {
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 1500);
+
+        return () => clearTimeout(timer);
+      }, []);
+
+if (loading) {
+  return <Loader text="Loading About Page..." />;
+}
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800">
       {/* Navigation */}
